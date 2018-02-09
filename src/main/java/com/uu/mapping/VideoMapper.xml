@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uu.dao.VideoMapper" >
+    <resultMap id="BaseResultMap" type="com.uu.entity.Video">
+        <id column="id" property="id" javaType="INTEGER"/>
+        <result column="videoName" property="videoName" javaType="VARCHAR"/>
+        <result column="uploadID" property="uploadID" javaType="INTEGER"/>
+        <result column="praiseFrequency" property="praiseFrequency" javaType="INTEGER"/>
+        <result column="videoURL" property="videoURL" javaType="VARCHAR"/>
+        <result column="playFrequency" property="playFrequency" javaType="INTEGER"/>
+    </resultMap>
+
+    <sql id="BaseColumList">
+        id,videoName,uploadID,videoURL,praiseFrequency,playFrequency
+    </sql>
+
+    <insert id="uploadVideo" parameterType="com.uu.entity.Video" >
+        INSERT INTO video.videoinfo
+        id,videoName,uploadID,videoURL
+        VALUES (#{id,jdbcType=INTEGER},#{videoName,jdbcType=VARCHAR},#{uploadID,jdbcType=INTEGER}
+        ,#{videoURL,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="findByUploadID" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BaseColumList"/>
+        FROM video.videoinfo WHERE video.videoinfo.uploadID = #{uploadID,javaType=INTEGER}
+    </select>
+
+    <select id="findAllVideo" resultMap="BaseResultMap">
+        SELECT * FROM video.videoinfo
+    </select>
+
+
+</mapper>
